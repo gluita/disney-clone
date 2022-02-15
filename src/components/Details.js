@@ -26,7 +26,6 @@ function Details() {
 
   const showTrailer = () => {
     setTrailer(!trailer);
-    console.log("who");
   };
   return (
     <Container>
@@ -73,7 +72,7 @@ function Details() {
               detailData.trailer +
               `?start=3&end=0&autoplay=1&fs=0&showinfo=0&rel=0&cc_load_policy=0&iv_load_policy=3"`
             }
-            width="788"
+            width="100%"
             height="443"
           ></iframe>
           <Close_Button>
@@ -92,7 +91,7 @@ const Container = styled.section`
   width: 100%;
   padding: 30px 41px 0px;
   position: relative;
-  
+
   /* overflow: hidden; */
   @media screen and (max-width: 768px) {
     padding: 0 18px;
@@ -126,8 +125,8 @@ const Container = styled.section`
 const GridCtrl = styled.div`
   display: flex;
   margin-top: 20px;
-  @media screen and (min-width:768px) {
-    display:none
+  @media screen and (min-width: 768px) {
+    display: none;
   }
 `;
 const BackgroundImage = styled.div`
@@ -183,13 +182,16 @@ const PlayButton = styled.button`
   cursor: pointer;
   margin-right: 14px;
   @media screen and (max-width: 768px) {
+    img {
+      width: 28px;
+    }
+    padding: 0 16px;
   }
 `;
 const TrailerButton = styled(PlayButton)`
   background: rgba(0, 0, 0, 0.6);
   color: white;
   border: 1px solid white;
-  transition-duration: 5s;
   position: relative;
 `;
 const AddButton = styled.button`
@@ -206,7 +208,7 @@ const AddButton = styled.button`
   span {
     font-size: 30px;
   }
-  @media screen and (max-width:768px) {
+  @media screen and (max-width: 768px) {
     display: none;
   }
 `;
@@ -232,10 +234,10 @@ const TrailerVideo = styled.div`
   justify-content: center;
   align-items: center;
   background: rgb(9 9 9 / 50%);
-  iframe{
-    width:80%;
-    margin-right:12px;
-    margin-left:12px;
+  iframe {
+    width: 80%;
+    margin-right: 12px;
+    margin-left: 12px;
   }
 `;
 
@@ -253,9 +255,9 @@ const Close_Button = styled.button`
   cursor: pointer;
   top: 40px;
   right: 50px;
-  @media screen and (max-width:768px){
-    top:70px;
-    right:12px;
+  @media screen and (max-width: 768px) {
+    top: 70px;
+    right: 12px;
   }
 `;
 const Video = styled.div``;
@@ -269,4 +271,5 @@ const MobAddButton = styled(AddButton)`
   }
 `;
 const MobGroupButton = styled(GroupButton)`
-display:block`;
+  display: block;
+`;

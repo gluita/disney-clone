@@ -23,7 +23,13 @@ function Movies() {
   );
 }
 
-const Container = styled.section``;
+const Container = styled.section`
+  padding: 30px 0;
+
+  @media screen and (min-width: 768px) {
+    padding: 30px 0;
+  }
+`;
 const Content = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);

@@ -1,12 +1,13 @@
-import React from 'react';
+import React,{useState , useEffect} from 'react';
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
+import data from './Data';
 
 function ImgSlider() {
+  const [Data,setData] = useState(data)
   const settings = {
     dots: true,
     infinite: true,
@@ -15,6 +16,7 @@ function ImgSlider() {
     slidesToScroll: 1,
     autoplay:true,
   };
+
   return (
     <Carousel {...settings}>
       <Wrap>
@@ -23,14 +25,21 @@ function ImgSlider() {
         </Link>
       </Wrap>
       <Wrap>
-        <img src="/assests/images/slider-badging.jpg" alt="" />
+        <Link to="/details/mrVWrAlN4apDpMBuBqk7">
+          <img src="/assests/images/slider-badging.jpg" alt="" />
+        </Link>
       </Wrap>
       <Wrap>
-        <img src="/assests/images/slider-scales.jpg" alt="" />
+        <Link to="/details/mrVWrAlN4apDpMBuBqk7">
+          <img src="/assests/images/slider-scale.jpg" alt="" />
+        </Link>
       </Wrap>
       <Wrap>
-        <img src="/assests/images/slider-scale.jpg" alt="" />
+        <Link to="/details/mrVWrAlN4apDpMBuBqk7">
+          <img src="/assests/images/slider-scales.jpg" alt="" />
+        </Link>
       </Wrap>
+
     </Carousel>
   );
 }
@@ -57,6 +66,9 @@ const Carousel = styled(Slider)`
   }
   button {
     z-index: 1;
+  }
+  @media screen and (min-width: 728px){
+    margin-top: 5px;
   }
 `;
 

@@ -1,23 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  searchTerm: null,
-  searchResult:[]
+  searchTerm: "",
+  movies:[]
 };
 
 const searchSlice = createSlice({
-  name: "movie",
+  name: "search",
   initialState,
   reducers: {
-    setMovies: (state, action) => {
-      state.recommend = action.payload.recommend;
+    setSearchedMovies: (state, action) => {
+      state.searchTerm = action.payload.searchTerm;
+      state.movies = action.payload.movies
     },
   },
 });
 
-export const { setMovies } = movieSlice.actions;
+export const { setSearchedMovies } = searchSlice.actions;
 
-export const selectTerm = (state) => state.search.searchTerm;
-export const selectResult = (state) => state.search.searchResult;
 
 export default searchSlice.reducer;

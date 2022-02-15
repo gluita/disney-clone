@@ -88,8 +88,8 @@ function Navbar() {
         <>
           <NavMenu ref={navMenuRef}>
             <NavLinks>
-              <NavLink to="/home" activeClassName="active"  onClick={hideMenu}>
-                <LinkContainer>
+              <NavLink to="/home" activeClassName="active"  >
+                <LinkContainer onClick={hideMenu}>
                   <NavImg>
                     <img src="/assests/images/home-icon.svg" alt="" />
                   </NavImg>
@@ -125,6 +125,7 @@ function Navbar() {
           </Bars>
           <SignOut onClick={handleAuth}>
             <img src={userphoto} alt="" />
+            <p>Sign Out</p>
           </SignOut>
         </>
       )}
@@ -142,6 +143,7 @@ const LoginBtn = styled.button`
   font-size:20px;
   border-radius:3px;
   letter-spacing:1.5px;
+  cursor:pointer;
 `;
 const Nav = styled.div`
   position: fixed;
@@ -175,7 +177,9 @@ const SignOutMob = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 2.4rem;
+  position: absolute;
+  top: 80%;
+  letter-spacing:2px;
 
   @media screen and (min-width: 768px) {
     display: none;
@@ -213,8 +217,17 @@ const NavMenu = styled.div`
 const NavLink = styled(Link)`
   display: flex;
   align-items: center;
+  color: #717074;
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+
   &.active {
-    color: #15cdfc;
+    color: white;
+    border-bottom: 1px solid white;
+    border-radius: 1px;
+    transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+  }
+  &:hover {
+    transform: scale(1.05);
   }
 `;
 const NavLinks = styled.div`
@@ -259,13 +272,39 @@ const LinkName = styled.p`
 const SignOut = styled(Logo)`
   display: flex;
   align-items: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+
   img {
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
+  }
+  p {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 49px;
+    right: -23px;
+    padding: 11px 12px;
+    border-radius: 5px;
+    width: 100px;
+    background: #363d53;
+    text-align: center;
+    letter-spacing: 1.4px;
+    transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   }
   @media screen and (max-width: 768px) {
     display: none;
+  }
+  &:hover {
+    p {
+      opacity:1;
+      pointer-events: all;
+      visibility: visible;
+      transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+    }
   }
 `;
 const CloseBtn = styled.div`

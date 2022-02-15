@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Details from "./components/Details";
 import Search from './pages/Search'
+import Series from "./pages/Series";
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
           <Route path="/home" element={<Home/>} />
           <Route path="/details/:id" element={<Details/>} />
           <Route path="/search" element={<Search/>} />
+          <Route path="/series" element={<Series/>} />
         </Routes>
       </Router>
     </div>

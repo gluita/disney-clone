@@ -31,7 +31,7 @@ function Home() {
   return (
     <Container>
       <ImgSlider />
-      <Viewers />
+      {/* <Viewers /> */}
       <Movies />
     </Container>
   );
