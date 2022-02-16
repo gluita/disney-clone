@@ -48,20 +48,19 @@ function Searchform() {
 
   return (
     <InputContainer>
-    <InputBox>
-      <input
-        type="text"
-        id="name"
-        placeholder="Search"
-        className="input"
-        ref={searchRef}
-        onChange={searchMovies}
-        autocomplete="off"
-      ></input>
-      <img src="/assests/images/search-icon.svg" alt="" />
-    </InputBox>
+      <InputBox>
+        <input
+          type="text"
+          id="name"
+          placeholder="Search"
+          className="input"
+          ref={searchRef}
+          onChange={searchMovies}
+          autoComplete="off"
+        ></input>
+        <img src="/assests/images/search-icon.svg" alt="" />
+      </InputBox>
     </InputContainer>
-    
   );
 }
 const InputContainer = styled.div`
@@ -81,7 +80,7 @@ const InputBox = styled.div`
   input {
     background-color: transparent;
     border: none;
-    width: 220px;
+    width: 200px;
     border-bottom: 1px solid white;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
     color: white;

@@ -20,22 +20,22 @@ function ImgSlider() {
   return (
     <Carousel {...settings}>
       <Wrap>
-        <Link to="/details/mrVWrAlN4apDpMBuBqk7">
+        <Link to="/details/K0NuuBYRbsbHNMEtWfKX">
           <img src="/assests/images/slider-badag.jpg" alt="" />
         </Link>
       </Wrap>
       <Wrap>
-        <Link to="/details/mrVWrAlN4apDpMBuBqk7">
+        <Link to="/details/K0NuuBYRbsbHNMEtWfKX">
           <img src="/assests/images/slider-badging.jpg" alt="" />
         </Link>
       </Wrap>
       <Wrap>
-        <Link to="/details/mrVWrAlN4apDpMBuBqk7">
+        <Link to="/details/K0NuuBYRbsbHNMEtWfKX">
           <img src="/assests/images/slider-scale.jpg" alt="" />
         </Link>
       </Wrap>
       <Wrap>
-        <Link to="/details/mrVWrAlN4apDpMBuBqk7">
+        <Link to="/details/K0NuuBYRbsbHNMEtWfKX">
           <img src="/assests/images/slider-scales.jpg" alt="" />
         </Link>
       </Wrap>

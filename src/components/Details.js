@@ -9,6 +9,7 @@ function Details() {
   const { id } = useParams();
   const [detailData, setDetailData] = useState({});
   const [trailer, setTrailer] = useState(false);
+  const [play, setPlay] = useState(false);
   useEffect(() => {
     const collectionRef = collection(db, "movies");
 
@@ -27,40 +28,69 @@ function Details() {
   const showTrailer = () => {
     setTrailer(!trailer);
   };
+
+const checkModal  = () =>{
+    setTimeout(() => {
+      if (trailer) {
+        setTrailer(false)
+      }
+       if (play){
+        setPlay(false)}
+    }, 5000);
+  }
+
+
+useEffect(()=>{
+  if(trailer){
+    checkModal()
+  }
+  else if(play){
+    checkModal()
+  }
+},[trailer , play])
+
+
+  const showPlay = () =>{
+    setPlay(!play)
+  }
   return (
     <Container>
       <Movie_Logo>
         <img src={detailData.titleImg} alt="" />
       </Movie_Logo>
-      <Controls>
-        <PlayButton>
-          <img src="/assests/images/play-icon-black.png" alt="" />
-          <span>PLAY</span>
-        </PlayButton>
-        <TrailerButton onClick={showTrailer}>
-          <img src="/assests/images/play-icon-white.png" alt="" />
-          <span>TRAILER</span>
-        </TrailerButton>
-        <AddButton>
-          <span>+</span>
-        </AddButton>
-        <GroupButton>
-          <img src="/assests/images/group-icon.png" alt="" />
-        </GroupButton>
-      </Controls>
-      <GridCtrl>
-        <MobAddButton>
-          <span>+</span>
-        </MobAddButton>
-        <MobGroupButton>
-          <img src="/assests/images/group-icon.png" alt="" />
-        </MobGroupButton>
-      </GridCtrl>
+      <Grid>
+        <Controls>
+          <PlayButton onClick={showPlay}>
+            <img src="/assests/images/play-icon-black.png" alt="" />
+            <span>PLAY</span>
+          </PlayButton>
+          <TrailerButton onClick={showTrailer}>
+            <img src="/assests/images/play-icon-white.png" alt="" />
+            <span>TRAILER</span>
+          </TrailerButton>
+          <AddButton>
+            <span>+</span>
+          </AddButton>
+          <GroupButton>
+            <img src="/assests/images/group-icon.png" alt="" />
+          </GroupButton>
+        </Controls>
+        <GridCtrl>
+          <MobAddButton>
+            <span>+</span>
+          </MobAddButton>
+          <MobGroupButton>
+            <img src="/assests/images/group-icon.png" alt="" />
+          </MobGroupButton>
+        </GridCtrl>
+        <SubTitle>{detailData.subTitle}</SubTitle>
+        <DescDiv>{detailData.description}</DescDiv>
+      </Grid>
 
-      <BackgroundImage>
+      <BackgroundImage className="bgactive">
         <img src={detailData.backgroundImg} alt="" />
       </BackgroundImage>
-      {trailer && (
+      {/* {trailer && (
         <TrailerVideo>
           <iframe
             allow="autoplay"
@@ -79,11 +109,96 @@ function Details() {
             <IoCloseSharp onClick={showTrailer} />{" "}
           </Close_Button>
         </TrailerVideo>
+      )} */}
+      {trailer && (
+        <Modal>
+          <p>
+            Well! You wanna see the trailer. But I was too tired ,so i didn't
+            add any trailer{" "}
+          </p>
+          <p> {`Hav a Nice Day! :) `} </p>
+          <div className="close"><IoCloseSharp onClick={()=>setTrailer(false)}/></div>
+        </Modal>
+      )}
+      {play && (
+        <Modal>
+          <p>
+            Sorry! No Movies.
+          </p>
+          <p>Why don't u read the description and go watch the movie some-else where.</p>
+          <p> {`Booga Booga :) `} </p>
+          <div className="close"><IoCloseSharp onClick={()=>setTrailer(false)}/></div>
+        </Modal>
       )}
     </Container>
   );
 }
 
+const Modal = styled.div`
+  position: absolute;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #040714;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 70vw;
+  height: 70%;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 4px;
+  letter-spacing: 1.3px;
+  font-size: 17px;
+  border: 2px solid rgba(249, 249, 249, 0.1);
+  border-color: rgba(249, 249, 249, 0.8);
+
+  & .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 34px;
+  }
+  @media screen and (max-width: 728px) {
+    font-size: 13px;
+    width: 97vw;
+    height: 30%;
+    & .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+    }
+  }
+`;
+
+
+const SubTitle = styled.div`
+  line-height: 21.5px;
+  letter-spacing: 1px;
+  font-size: 17px;
+  @media screen and (max-width:768px){
+    font-size: 13px;
+    width:100%
+  }
+`;
+
+const DescDiv = styled.div`
+  width: 55vw;
+  line-height: 21.5px;
+  letter-spacing: 1px;
+  font-size:17px;
+  @media screen and (max-width:768px){
+    font-size:13px;
+    width:100%
+  }
+`;
+const Grid = styled.div`
+  display: grid;
+  grid-gap: 2rem;
+`;
 const Container = styled.section`
   position: relative;
   margin-top: 70px;
@@ -91,7 +206,7 @@ const Container = styled.section`
   width: 100%;
   padding: 30px 41px 0px;
   position: relative;
-
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   /* overflow: hidden; */
   @media screen and (max-width: 768px) {
     padding: 0 18px;
@@ -155,7 +270,7 @@ const Movie_Logo = styled.div`
   min-width: 200px;
   min-height: 170px;
   height: 32vh;
-
+  margin-bottom:10px;
   img {
     width: 100%;
     height: 100%;
@@ -181,6 +296,13 @@ const PlayButton = styled.button`
   padding: 0 22px;
   cursor: pointer;
   margin-right: 14px;
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+  
+  &:hover {
+    transform: scale(1.06);
+  }
+  position: relative;
+
   @media screen and (max-width: 768px) {
     img {
       width: 28px;

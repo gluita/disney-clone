@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMovies } from "../features/movies/movieSlice";
 import db from "../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
+import { query, orderBy, limit } from "firebase/firestore";
 
 function Home() {
   const username = useSelector((state) => state.user.name);
@@ -15,17 +16,19 @@ function Home() {
   useEffect(() => {
     const colRef = collection(db, "movies");
     const getData = async () => {
-      const data = await getDocs(colRef);
-      let recommends = []
+      const q = query(colRef, orderBy("type"), limit(5));
+      const data = await getDocs(q);
+      let recommends = [];
       data.docs.map((movie) => {
-        recommends = [...recommends,{...movie.data(),id:movie.id}]
-      })
-      dispatch(setMovies({
-      recommend:recommends
-    }))
+        recommends = [...recommends, { ...movie.data(), id: movie.id }];
+      });
+      dispatch(
+        setMovies({
+          recommend: recommends,
+        })
+      );
     };
-    getData()
-    
+    getData();
   }, [username]);
 
   return (

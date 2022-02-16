@@ -19,7 +19,7 @@ function Navbar() {
   const username = useSelector((state) => state.user.name);
   const userphoto = useSelector((state) => state.user.photo);
   const [showMenu, setShowMenu] = useState(false);
-
+  var startingX, startingY, movingX, movingY;
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -62,18 +62,40 @@ function Navbar() {
 
   const hideMenu = () => {
     setShowMenu(false);
-    changeMenu();
   };
   const menuShow = () => {
     setShowMenu(true);
-    changeMenu();
+  };
+  useEffect(() => {
+    changMenu();
+  }, [showMenu]);
+
+  const changMenu = () => {
+    try {
+      if (showMenu) {
+        navMenuRef.current.style.right = "0";
+      } else {
+        navMenuRef.current.style.right = "-100%";
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const changeMenu = () => {
-    if (showMenu) {
-      navMenuRef.current.style.right = "0";
-    } else {
-      navMenuRef.current.style.right = "-100%";
+  const touchstart = (e) => {
+    startingX = e.touches[0].clientX;
+    startingY = e.touches[0].clientY;
+  };
+  const touchmove = (e) => {
+    movingX = e.touches[0].clientX;
+    movingY = e.touches[0].clientY;
+  };
+  const touchend = (e) => {
+    if (startingX + 100 < movingX){
+      hideMenu()
+    }
+    if(startingX -100 > movingY){
+      showMenu()
     }
   };
 
@@ -83,12 +105,17 @@ function Navbar() {
         <img src="/assests/images/logo.svg" alt="" />
       </Logo>
       {!username ? (
-        <LoginBtn  onClick={handleAuth}>Login</LoginBtn>
+        <LoginBtn onClick={handleAuth}>Login</LoginBtn>
       ) : (
         <>
-          <NavMenu ref={navMenuRef}>
+          <NavMenu
+            ref={navMenuRef}
+            onTouchStart={(e) => touchstart(e)}
+            onTouchMove={(e)=>touchmove(e)}
+            onTouchEnd={touchend}
+          >
             <NavLinks>
-              <NavLink to="/home" activeClassName="active"  >
+              <NavLink to="/home" activeclassname="active">
                 <LinkContainer onClick={hideMenu}>
                   <NavImg>
                     <img src="/assests/images/home-icon.svg" alt="" />
@@ -96,7 +123,7 @@ function Navbar() {
                   <LinkName>Home</LinkName>
                 </LinkContainer>
               </NavLink>
-              <NavLink to="/search" activeClassName="active" onClick={hideMenu}>
+              <NavLink to="/search" activeclassname="active" onClick={hideMenu}>
                 <LinkContainer>
                   <NavImg>
                     <img src="/assests/images/search-icon.svg" alt="" />
@@ -104,7 +131,7 @@ function Navbar() {
                   <LinkName>Search</LinkName>
                 </LinkContainer>
               </NavLink>
-              <NavLink to="/series" activeClassName="active" onClick={hideMenu}>
+              <NavLink to="/series" activeclassname="active" onClick={hideMenu}>
                 <LinkContainer>
                   <NavImg>
                     <img src="/assests/images/series-icon.svg" alt="" />
@@ -138,12 +165,12 @@ const LoginBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background:transparent;
-  color:white;
-  font-size:20px;
-  border-radius:3px;
-  letter-spacing:1.5px;
-  cursor:pointer;
+  background: transparent;
+  color: white;
+  font-size: 20px;
+  border-radius: 3px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
 `;
 const Nav = styled.div`
   position: fixed;
@@ -169,8 +196,8 @@ const Logo = styled.div`
     width: 100%;
     height: 100%;
   }
-  @media screen and (max-width:768px){
-    width:72px;
+  @media screen and (max-width: 768px) {
+    width: 72px;
   }
 `;
 const SignOutMob = styled.div`
@@ -179,7 +206,7 @@ const SignOutMob = styled.div`
   justify-content: center;
   position: absolute;
   top: 80%;
-  letter-spacing:2px;
+  letter-spacing: 2px;
 
   @media screen and (min-width: 768px) {
     display: none;
@@ -225,9 +252,10 @@ const NavLink = styled(Link)`
     border-bottom: 1px solid white;
     border-radius: 1px;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+    transform: scale(1.07);
   }
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.07);
   }
 `;
 const NavLinks = styled.div`
@@ -300,7 +328,7 @@ const SignOut = styled(Logo)`
   }
   &:hover {
     p {
-      opacity:1;
+      opacity: 1;
       pointer-events: all;
       visibility: visible;
       transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
@@ -318,7 +346,7 @@ const CloseBtn = styled.div`
     top: 20px;
     left: 13px;
 
-    ${GoX} {
+    svg {
       width: 50px;
     }
   }

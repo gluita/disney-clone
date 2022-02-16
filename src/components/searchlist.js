@@ -23,20 +23,18 @@ const SearchList = () => {
   const allMovies = async () => {
     const colRef = collection(db, "movies");
     const data = await getDocs(colRef);
-    console.log(data);
     const result = data.docs.map((movie) => {
       return { ...movie.data(), id: movie.id };
     });
-    setMovieArray(result)
+    setMovieArray(result);
   };
 
   const showMovies = async () => {
     if (searchTerm == "") {
       allMovies();
-    } else {
+    } else if (searchTerm) {
       findMatchingMovies();
     }
-    console.log(movieArray);
   };
 
   useEffect(() => {
@@ -47,15 +45,16 @@ const SearchList = () => {
     <SearchSec>
       <MoviesList>
         {movieArray.map((doc) => {
-          const { cardImg , id } = doc;
+          const { cardImg, id } = doc;
           return (
-            <MovieItems>
+            <MovieItems key={id}>
               <Link to={`/details/` + id}>
                 <img src={cardImg} alt="" />
               </Link>
             </MovieItems>
           );
-        })}
+        })
+        }
       </MoviesList>
     </SearchSec>
   );
@@ -65,16 +64,16 @@ const SearchSec = styled.div`
   height: 100%;
   padding: 0 3rem;
   margin-top: 30px;
-  @media screen and (max-width:768px){
-    padding:0 20px;
+  @media screen and (max-width: 768px) {
+    padding: 0 20px;
   }
 `;
 const MoviesList = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
+  grid-gap: 20px;
   @media screen and (max-width: 768px) {
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 const MovieItems = styled.div`

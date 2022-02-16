@@ -1,44 +1,71 @@
-import React, { useRef , useEffect , useState } from 'react'
-import Data from '../components/Data'
-import styled from 'styled-components'
+import React, { useRef, useEffect, useState } from "react";
+import Data from "../components/Data";
+import styled from "styled-components";
+import db from "../firebase-config";
+import { collection, getDocs } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import { setMovies } from "../features/movies/movieSlice";
+import { Link } from "react-router-dom";
+
 function Series() {
-
-
+  const recommend = useSelector((state) => state.movie.recommend);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const colRef = collection(db, "movies");
+    const getData = async () => {
+      const data = await getDocs(colRef);
+      let recommends = [];
+      data.docs.map((movie) => {
+        recommends = [...recommends, { ...movie.data(), id: movie.id }];
+      });
+      dispatch(
+        setMovies({
+          recommend: recommends,
+        })
+      );
+    };
+    getData();
+  }, []);
 
   return (
     <SeriesSec>
       <SeriesContainer>
-        {Data.map((doc)=>{
-          const {description, cardImg , title , id} = doc
-        return (
-          <Wrap >
-            <img src={cardImg} alt="" />
-            <video autoPlay={true} loop={true} playsInline={true}>
-              <source src="/assests/videos/disney.mp4" type="video/mp4" />
-            </video>
-          </Wrap>
-        );
-      })}
+        {recommend.map((doc) => {
+          const { description, cardImg, title, id } = doc;
+          return (
+            <Wrap key={id}>
+              <Link to={`/details/` + id}>
+                <img src={cardImg} alt="" />
+                <video autoPlay={true} loop={true} playsInline={true}>
+                  <source
+                    src="/assests/videos/star-wars.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+              </Link>
+            </Wrap>
+          );
+        })}
       </SeriesContainer>
     </SeriesSec>
   );
 }
 
 const SeriesSec = styled.section`
-margin-top: 120px;
-min-height: calc(100vh - 120px);
-padding:0 41px;
-max-width: 100vw;
-`
+  margin-top: 120px;
+  min-height: calc(100vh - 120px);
+  padding: 0 41px;
+  max-width: 100vw;
+`;
 const SeriesContainer = styled.div`
-display: grid;
-grid-template-columns: repeat(5,1fr);
-grid-gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
 
-@media screen and (max-width:768px) {
-  grid-template-columns: repeat(1, 1fr);
-}
-`
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
 
 // `;
 
@@ -88,9 +115,9 @@ const Wrap = styled.div`
       z-index: 3;
     }
   }
-  .active{
-      opacity: 1;
-      z-index: 3;
+  .active {
+    opacity: 1;
+    z-index: 3;
   }
 `;
-export default Series
+export default Series;
