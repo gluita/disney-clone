@@ -61,7 +61,7 @@ function Login() {
           <CTA_logo_one src="/assests/images/cta-logo-one.svg" alt="" />
           <Sign_up onClick={handleAuth}> Get Started</Sign_up>
           <Description>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
+            Dua Lipa!!!! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
             cumque illo, culpa doloribus deserunt nostrum iure quasi consequatur
             aperiam.
           </Description>
